@@ -1,0 +1,96 @@
+---
+title: "Exercise 1"
+date: "2024-09-26"
+bibliography: biblio.bib
+# 4. Highlight the code using monochrome style.
+output:
+  html_document:
+    highlight: monochrome
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+install.packages("knitr")
+library (knitr)
+```
+
+## Lecture 2: R Markdown
+
+2\. Create a new header of type 2 (i.e., \## Header Text).
+
+## Header Text Type 2
+
+3.  Perform a linear regression with ”Sepal Length” as the response and ”Sepal Width” as the explanatory variable from the iris dataset. Save the result.
+
+```{r}
+
+model <- lm(iris$Sepal.Length ~ iris$Sepal.Width, data = iris)
+
+
+```
+
+5.  Print the summary of the linear regression.
+
+```{r}
+summary(model)
+```
+
+6.  Include the QQ plot from the linear regression and change the points to filled dots.
+
+```{r}
+qqnorm(fitted(model), main = "QQ Plot of Fitted Values", pch=19)
+
+```
+
+7.  Print the head of the iris dataset using kable.
+
+```{r}
+kable(head(iris))
+```
+
+8.  Remove the period from the column labels.
+
+```{r}
+kable(iris, col.names = gsub("[.]", " ", names(iris)))
+```
+
+### More advanced manipulations:
+
+1.  Install kableExtra. Perform the examples shown in the slides with the iris dataset.
+
+```{r}
+install.packages("kableExtra")
+library(kableExtra)
+iris[1:3, 1:3] %>%
+  kbl() %>%
+  kable_paper(full_width = F) %>%  
+  column_spec(3, color = spec_color(iris$Sepal.Width[1:3]),
+              link = "https://haozhu233.github.io/kableExtra/") %>%
+  column_spec(3, color = "white",
+              background = spec_color(iris$Petal.Length[1:3], end = 0.7),
+              popover = paste("am:", iris$Petal.Width[1:3]))
+```
+
+2.  Using Mathpix, reproduce equation (6.1) from the paper available at <https://arxiv.org/abs/math/0303109>. $$
+    2 \sqrt{t_0 - t_\gamma} \int_{t_\gamma}^{t_0} \sqrt{t_0 - t} \left( R(\gamma(t), t) + |\dot{\gamma}(t)|^2 \right) dt \geq C(A) r_0^2
+    $$
+
+3.  Add the reference for the paper and cite it in the RMarkdown file. (@perelman2003ricci)
+
+4.  Recreate your RMarkdown file as a Quarto document.
+
+## Lecture 3: GitHub
+
+1.  Create a GitHub repository for the RMarkdown file (.Rmd) you created in the previous exercise.
+
+    <https://github.com/MariGandarillas98/Exercise-1>
+
+2.  Edit the README.md file and push the .Rmd to the repository.
+
+3.  Collaborate with another person (Person A and Person B):
+
+    -   Ensure the repository is up-to-date. Person B modifies the .Rmd and pushes the changes, then Person A pulls the changes.
+    -   Ensure the repository is up-to-date. Person A modifies the 1st section of the .Rmd, while Person B modifies the 2nd section (no conflict). No push or pull in between. Person A commits and pushes, then Person B attempts to push and solve any merge conflicts.
+    -   Handle conflicts when both Person A and Person B modify the same section of the .Rmd.
+
+## References
